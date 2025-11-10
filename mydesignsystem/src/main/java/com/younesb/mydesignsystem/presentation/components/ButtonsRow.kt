@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -22,6 +23,7 @@ fun ButtonsRow(
     count: Int,
     icon: @Composable (Int) -> ImageVector?,
     text: @Composable (Int) -> String,
+    modifier: Modifier = Modifier,
     outlined: (Int) -> Boolean = { false },
     enabled: @Composable (Int) -> Boolean = { true },
     colors: @Composable (Int) -> ButtonColors = {
@@ -30,12 +32,11 @@ fun ButtonsRow(
         else
             ButtonDefaults.buttonColors()
                                                 },
-    onClick: (Int) -> Unit = {},
-    modifier: Modifier = Modifier,
     size: Dp = ButtonDefaults.MediumContainerHeight,
     expandedWeight: Float = 1.15f,
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.spacedBy(8.dp),
+    onClick: (Int) -> Unit = {},
 ) {
     Row(
         modifier = modifier,
