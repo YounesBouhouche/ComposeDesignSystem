@@ -15,6 +15,44 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.younesb.mydesignsystem.R
 
+/**
+ * A standardized button row for dialog actions with OK, Cancel, and optional neutral buttons.
+ * Follows Material Design guidelines for dialog button layout and styling.
+ *
+ * The component automatically handles button spacing and layout:
+ * - Neutral button on the left (if provided)
+ * - Cancel button (outlined) in the middle (if provided)
+ * - OK button (filled) on the right (if provided)
+ *
+ * At least one button should be provided for the component to be useful.
+ *
+ * @param cancelListener Callback invoked when cancel button is clicked. If null, cancel button is hidden.
+ * @param cancelText The text to display on the cancel button (defaults to localized "Cancel").
+ * @param okListener Callback invoked when OK button is clicked. If null, OK button is hidden.
+ * @param neutral Optional composable content for a neutral action button (e.g., "Learn More").
+ *
+ * @sample
+ * ```
+ * DialogButtons(
+ *     cancelListener = { dialog.dismiss() },
+ *     okListener = {
+ *         saveChanges()
+ *         dialog.dismiss()
+ *     }
+ * )
+ *
+ * // With neutral button
+ * DialogButtons(
+ *     cancelListener = { dialog.dismiss() },
+ *     okListener = { confirmAction() },
+ *     neutral = {
+ *         TextButton(onClick = { showHelp() }) {
+ *             Text("Help")
+ *         }
+ *     }
+ * )
+ * ```
+ */
 @Composable
 fun DialogButtons(
     cancelListener: (() -> Unit)? = null,

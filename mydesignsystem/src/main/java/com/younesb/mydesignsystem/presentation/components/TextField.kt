@@ -27,7 +27,48 @@ import androidx.compose.ui.text.input.VisualTransformation
 import soup.compose.material.motion.animation.materialSharedAxisZIn
 import soup.compose.material.motion.animation.materialSharedAxisZOut
 
-
+/**
+ * A Material 3 outlined text field with built-in clear button and enhanced features.
+ * Wraps OutlinedTextField with commonly needed functionality.
+ *
+ * Features:
+ * - Animated clear button (appears when text is not empty)
+ * - Autofill support for improved UX
+ * - Error state with supporting text
+ * - Customizable leading/trailing icons
+ * - Full keyboard options support
+ *
+ * @param value The current text value of the field.
+ * @param onValueChange Callback invoked when the text changes.
+ * @param modifier The modifier to be applied to the text field.
+ * @param enabled Whether the text field is enabled for input.
+ * @param label The label text to display.
+ * @param placeholder The placeholder text to display when empty.
+ * @param leadingIcon Optional icon to display at the start of the field.
+ * @param trailingIcon Optional composable for trailing content (defaults to animated clear button).
+ * @param autoCompleteContentType Content type hint for autofill services.
+ * @param error Optional error message to display below the field.
+ * @param visualTransformation Transformation to apply to the displayed text (e.g., password masking).
+ * @param imeAction The IME action to show on the keyboard.
+ * @param keyboardType The type of keyboard to display.
+ * @param keyboardActions Actions to perform on keyboard events.
+ * @param singleLine Whether the field should be single line.
+ * @param interactionSource Optional custom interaction source.
+ *
+ * @sample
+ * ```
+ * var email by remember { mutableStateOf("") }
+ * TextField(
+ *     value = email,
+ *     onValueChange = { email = it },
+ *     label = "Email",
+ *     placeholder = "Enter your email",
+ *     leadingIcon = Icons.Default.Email,
+ *     keyboardType = KeyboardType.Email,
+ *     autoCompleteContentType = ContentType.EmailAddress
+ * )
+ * ```
+ */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun TextField(
@@ -87,6 +128,49 @@ fun TextField(
     )
 }
 
+/**
+ * A specialized text field for password input with visibility toggle.
+ * Built on top of [TextField] with password-specific defaults.
+ *
+ * Features:
+ * - Password visibility toggle button (eye icon)
+ * - Password masking by default
+ * - Autofill support for passwords
+ * - Password keyboard type
+ * - All features from [TextField]
+ *
+ * @param value The current password text value.
+ * @param onValueChange Callback invoked when the password text changes.
+ * @param passwordHidden Whether the password should be masked (true) or visible (false).
+ * @param onPasswordHiddenChange Callback invoked when the visibility toggle is clicked.
+ * @param modifier The modifier to be applied to the text field.
+ * @param enabled Whether the text field is enabled for input.
+ * @param label The label text to display.
+ * @param placeholder The placeholder text to display when empty.
+ * @param leadingIcon Optional icon to display at the start of the field.
+ * @param trailingIcon Optional composable for trailing content (defaults to visibility toggle).
+ * @param autoCompleteContentType Content type hint for autofill (defaults to Password).
+ * @param error Optional error message to display below the field.
+ * @param imeAction The IME action to show on the keyboard.
+ * @param keyboardType The type of keyboard to display (defaults to Password).
+ * @param keyboardActions Actions to perform on keyboard events.
+ * @param singleLine Whether the field should be single line.
+ *
+ * @sample
+ * ```
+ * var password by remember { mutableStateOf("") }
+ * var passwordHidden by remember { mutableStateOf(true) }
+ *
+ * PasswordTextField(
+ *     value = password,
+ *     onValueChange = { password = it },
+ *     passwordHidden = passwordHidden,
+ *     onPasswordHiddenChange = { passwordHidden = it },
+ *     label = "Password",
+ *     leadingIcon = Icons.Default.Lock
+ * )
+ * ```
+ */
 @Composable
 fun PasswordTextField(
     value: String,

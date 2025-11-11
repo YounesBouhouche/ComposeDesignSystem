@@ -17,6 +17,49 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+/**
+ * A row of equally-weighted buttons with animated press states.
+ * When a button is pressed, it smoothly expands while others shrink, creating an expressive interaction.
+ *
+ * This component is useful for choice selections, segmented controls, or action groups
+ * where you need multiple buttons with consistent styling.
+ *
+ * Features:
+ * - Animated weight distribution on press
+ * - Configurable button count with index-based customization
+ * - Per-button icon, text, and styling
+ * - Uses [ExpressiveButton] internally
+ *
+ * @param count The number of buttons to display.
+ * @param icon Function that returns the icon for button at given index (can return null).
+ * @param text Function that returns the text for button at given index.
+ * @param modifier The modifier to be applied to the row.
+ * @param outlined Function that returns whether button at given index should be outlined.
+ * @param enabled Function that returns whether button at given index should be enabled.
+ * @param colors Function that returns the colors for button at given index.
+ * @param size The height of each button.
+ * @param expandedWeight The weight multiplier for the pressed button (default 1.15x).
+ * @param verticalAlignment Vertical alignment of buttons in the row.
+ * @param horizontalArrangement Horizontal arrangement and spacing of buttons.
+ * @param onClick Callback invoked when a button is clicked, receives the button index.
+ *
+ * @sample
+ * ```
+ * ButtonsRow(
+ *     count = 3,
+ *     icon = { index ->
+ *         when(index) {
+ *             0 -> Icons.Default.Home
+ *             1 -> Icons.Default.Search
+ *             else -> Icons.Default.Settings
+ *         }
+ *     },
+ *     text = { index -> listOf("Home", "Search", "Settings")[index] },
+ *     outlined = { index -> index != selectedIndex },
+ *     onClick = { index -> selectedIndex = index }
+ * )
+ * ```
+ */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ButtonsRow(

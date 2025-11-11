@@ -45,11 +45,36 @@ import androidx.core.text.isDigitsOnly
 import com.younesb.mydesignsystem.presentation.util.DigitsFieldState
 import com.younesb.mydesignsystem.presentation.util.rememberDigitsFieldState
 
+/**
+ * A composable that displays a field for entering a multi-digit code (e.g., OTP, PIN).
+ * Each digit is displayed in its own box with automatic focus management.
+ *
+ * The component automatically moves focus to the next box when a digit is entered,
+ * and moves back when backspace is pressed on an empty box. When all digits are entered,
+ * the keyboard is automatically hidden.
+ *
+ * @param modifier The modifier to be applied to the component.
+ * @param state The state holder for the digits field. Use [rememberDigitsFieldState] to create it.
+ * @param horizontalArrangement The horizontal arrangement of the digit boxes.
+ * @param contentPadding The padding to be applied to the content inside each digit box.
+ *
+ * @sample
+ * ```
+ * val state = rememberDigitsFieldState(4)
+ * DigitsField(
+ *     state = state,
+ *     modifier = Modifier.fillMaxWidth()
+ * )
+ * // Access the code with: state.code
+ * // Check if complete with: state.isCodeComplete()
+ * // Set error state with: state.isError = true
+ * ```
+ */
 @Suppress("Unused")
 @Composable
 fun DigitsField(
-    state: DigitsFieldState = rememberDigitsFieldState(4),
     modifier: Modifier = Modifier,
+    state: DigitsFieldState = rememberDigitsFieldState(4),
     horizontalArrangement: Arrangement.Horizontal = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {

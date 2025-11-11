@@ -25,6 +25,47 @@ import com.younesb.mydesignsystem.presentation.util.Resource
 import soup.compose.material.motion.animation.materialSharedAxisYIn
 import soup.compose.material.motion.animation.materialSharedAxisYOut
 
+/**
+ * A component that handles different states of a resource (Idle, Loading, Success, Error)
+ * with smooth animated transitions between states.
+ *
+ * This component simplifies handling async operations by providing default UI for each state
+ * while allowing full customization. Uses Material Motion's shared axis transitions.
+ *
+ * The Resource type should be a sealed class with states: Idle, Loading, Success(T), and Error(E).
+ *
+ * Features:
+ * - Animated state transitions
+ * - Default loading indicator (CircularWavyProgressIndicator)
+ * - Default error UI with icon and message
+ * - Fully customizable content for each state
+ * - Type-safe error handling with custom error types
+ *
+ * @param T The type of successful data.
+ * @param E The type of error (must extend Error).
+ * @param resource The current resource state to display.
+ * @param modifier The modifier to be applied to the container.
+ * @param transitionSpec The transition animation between states.
+ * @param idleContent Composable to display in Idle state (default is empty).
+ * @param loadingContent Composable to display in Loading state (default is centered progress indicator).
+ * @param errorContent Composable to display in Error state, receives the error object.
+ * @param content Composable to display in Success state, receives the data object.
+ *
+ * @sample
+ * ```
+ * val userResource: Resource<User, ApiError> by viewModel.user.collectAsState()
+ *
+ * ResourceView(
+ *     resource = userResource,
+ *     errorContent = { error ->
+ *         Text("Error: ${error.message}")
+ *     },
+ *     content = { user ->
+ *         UserProfile(user)
+ *     }
+ * )
+ * ```
+ */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun<T, E: Error> ResourceView(

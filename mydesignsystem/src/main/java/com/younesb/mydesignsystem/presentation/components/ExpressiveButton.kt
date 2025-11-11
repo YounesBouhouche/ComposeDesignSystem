@@ -22,6 +22,38 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 
+/**
+ * An expressive button component with support for icons, loading states, and multiple sizes.
+ * This button uses Material 3's expressive design system and can be displayed as filled or outlined.
+ *
+ * Features:
+ * - Animated loading indicator that replaces content
+ * - Optional leading icon
+ * - Customizable size with automatic padding and typography adjustments
+ * - Filled or outlined variants
+ *
+ * @param text The composable content for the button text. Can be null for icon-only buttons.
+ * @param size The height of the button in Dp. Determines padding and icon size automatically.
+ * @param modifier The modifier to be applied to the button.
+ * @param icon Optional leading icon to display before the text.
+ * @param loading Whether to show a loading indicator instead of content.
+ * @param enabled Whether the button is enabled for interaction.
+ * @param outlined Whether to use an outlined style instead of filled.
+ * @param colors The colors to use for the button. Defaults based on outlined parameter.
+ * @param interactionSource Optional custom interaction source for the button.
+ * @param onClick Callback invoked when the button is clicked.
+ *
+ * @sample
+ * ```
+ * ExpressiveButton(
+ *     text = { Text("Submit") },
+ *     size = 56.dp,
+ *     icon = Icons.Default.Send,
+ *     loading = isLoading,
+ *     onClick = { /* Handle click */ }
+ * )
+ * ```
+ */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ExpressiveButton(

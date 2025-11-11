@@ -25,6 +25,41 @@ import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import kotlin.let
 
+/**
+ * An async image component with loading states, error handling, and fallback content.
+ * Uses Coil for image loading with Material 3 styling.
+ *
+ * Features:
+ * - Async image loading with Coil
+ * - Animated loading indicator (CircularWavyProgressIndicator)
+ * - Fallback icon and text when image fails to load
+ * - Optional click handling
+ * - Customizable shape and background
+ * - Crop content scaling
+ *
+ * @param model The data model for the image (URL, URI, File, etc). See Coil documentation.
+ * @param icon The fallback icon to display when image loading fails.
+ * @param modifier The modifier to be applied to the image.
+ * @param alt Optional composable content to display below the fallback icon on error.
+ * @param iconTint The tint color for the fallback icon.
+ * @param shape The shape to clip the image container.
+ * @param background The background color visible during loading or behind transparent images.
+ * @param fraction The size of the fallback icon as a fraction of the container.
+ * @param onClick Optional callback invoked when the image is clicked.
+ * @param onError Optional callback invoked when image loading fails.
+ * @param onSuccess Optional callback invoked when image loading succeeds.
+ *
+ * @sample
+ * ```
+ * Image(
+ *     model = "https://example.com/image.jpg",
+ *     icon = Icons.Default.Image,
+ *     modifier = Modifier.size(200.dp),
+ *     alt = { Text("Failed to load") },
+ *     onClick = { /* Handle click */ }
+ * )
+ * ```
+ */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun Image(

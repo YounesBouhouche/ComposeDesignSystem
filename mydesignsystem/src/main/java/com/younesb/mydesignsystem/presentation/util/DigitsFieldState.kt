@@ -115,6 +115,29 @@ class DigitsFieldState(
     }
 }
 
+/**
+ * Creates and remembers a [DigitsFieldState] with custom initial digits.
+ * The state is saved across configuration changes and process death.
+ *
+ * This function allows you to initialize the field with specific digit values,
+ * useful for pre-filling or restoring previous values.
+ *
+ * @param initialDigits List of initial digit values. Each element can be 0-9 or null for empty.
+ *                     Defaults to 4 empty digits.
+ * @param initialFocusedIndex The index of the digit that should initially have focus, or null.
+ * @return A remembered [DigitsFieldState] instance.
+ *
+ * @sample
+ * ```
+ * // Create a 6-digit field with some pre-filled values
+ * val state = rememberDigitsFieldState(
+ *     initialDigits = listOf(1, 2, null, null, null, null),
+ *     initialFocusedIndex = 2
+ * )
+ * ```
+ *
+ * @see rememberDigitsFieldState for a simpler API using digit count
+ */
 @Composable
 fun rememberDigitsFieldState(
     initialDigits: List<Int?> = (1..4).map { null },
@@ -128,7 +151,32 @@ fun rememberDigitsFieldState(
     }
 }
 
-
+/**
+ * Creates and remembers a [DigitsFieldState] with a specified number of empty digits.
+ * The state is saved across configuration changes and process death.
+ *
+ * This is a convenience overload that creates a field with the specified number of
+ * empty digits, commonly used for OTP/PIN entry.
+ *
+ * @param initialDigitsCount The number of digit boxes to create (must be at least 1).
+ *                          Defaults to 4 for typical PIN/OTP usage.
+ * @param initialFocusedIndex The index of the digit that should initially have focus, or null.
+ * @return A remembered [DigitsFieldState] instance with all digits initially null.
+ *
+ * @sample
+ * ```
+ * // Create a 6-digit OTP field
+ * val otpState = rememberDigitsFieldState(initialDigitsCount = 6)
+ *
+ * // Create a 4-digit PIN field
+ * val pinState = rememberDigitsFieldState(initialDigitsCount = 4)
+ *
+ * // Access the entered code
+ * if (otpState.isCodeComplete()) {
+ *     val code = otpState.code // e.g., "123456"
+ * }
+ * ```
+ */
 @Composable
 fun rememberDigitsFieldState(
     @IntRange(from = 1)
