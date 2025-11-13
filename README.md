@@ -92,11 +92,11 @@ Dialog(
 }
 ```
 
-#### MyImage
+#### Image
 Image component with loading states, error handling, and Coil integration.
 
 ```kotlin
-MyImage(
+Image(
     model = "https://example.com/image.jpg",
     icon = Icons.Default.Image,
     shape = CircleShape,
@@ -104,7 +104,105 @@ MyImage(
     onSuccess = { /* Handle success */ },
     onError = { /* Handle error */ }
 )
+
 ```
+#### ImagePicker
+Image picker component with new Android 13+ photo picker support.
+
+```kotlin
+var selectedImage by remember { mutableStateOf<Uri?>(null) }
+ImagePicker(
+    image = selectedImage,
+    onImageChange = { selectedImage = it },
+    modifier = Modifier.size(150.dp),
+    alt = { Text("Tap to add photo") }
+)
+```
+
+#### TextField
+Material 3 outlined text field with built-in clear button and enhanced features.
+
+```kotlin
+var email by remember { mutableStateOf("") }
+TextField(
+    value = email,
+    onValueChange = { email = it },
+    label = "Email",
+    placeholder = "Enter your email",
+    leadingIcon = Icons.Default.Email,
+    keyboardType = KeyboardType.Email,
+    autoCompleteContentType = ContentType.EmailAddress,
+    error = if (email.isEmpty()) "Email is required" else null
+)
+```
+
+**Features:**
+- Animated clear button (appears when text is not empty)
+- Autofill support for improved UX
+- Error state with supporting text
+- Customizable leading/trailing icons
+- Full keyboard options support
+
+#### PasswordTextField
+Specialized text field for password input with visibility toggle.
+
+```kotlin
+var password by remember { mutableStateOf("") }
+var passwordHidden by remember { mutableStateOf(true) }
+
+PasswordTextField(
+    value = password,
+    onValueChange = { password = it },
+    passwordHidden = passwordHidden,
+    onPasswordHiddenChange = { passwordHidden = it },
+    label = "Password",
+    placeholder = "Enter your password",
+    leadingIcon = Icons.Default.Lock
+)
+```
+
+**Features:**
+- Password visibility toggle button (eye icon)
+- Password masking by default
+- Autofill support for passwords
+- All features from TextField
+
+#### DigitsField
+A field for entering multi-digit codes (e.g., OTP, PIN) with automatic focus management.
+
+```kotlin
+val state = rememberDigitsFieldState(initialDigitsCount = 6)
+
+LaunchedEffect(state.code) {
+    state.isError = false // Reset error state on code change
+}
+
+DigitsField(
+    state = state,
+    modifier = Modifier.fillMaxWidth()
+)
+
+Button({
+    if (!state.isCodeComplete()) {
+        // Submit the code
+        val code = state.code
+    } else {
+        // Show error
+        state.isError = true
+    }
+}) {
+    Text("Submit")
+}
+
+```
+
+**Features:**
+- Automatic focus management between digit boxes
+- Animated borders and colors
+- Error state support
+- Customizable digit count
+- Keyboard automatically hides when complete
+- State saved across configuration changes
 
 #### ResourceView
 Generic component for handling different resource states (Idle, Loading, Success, Error).
@@ -221,6 +319,34 @@ sealed interface Resource<out T, out E: Error> {
     data class Error<out E: Error>(val error: E) : Resource<Nothing, E>
 }
 ```
+
+#### rememberDigitsFieldState
+State management for DigitsField component with configuration change survival.
+
+```kotlin
+// Create a 6-digit OTP field
+val otpState = rememberDigitsFieldState(initialDigitsCount = 6)
+
+// Create a field with pre-filled values
+val pinState = rememberDigitsFieldState(
+    initialDigits = listOf(1, 2, null, null),
+    initialFocusedIndex = 2
+)
+
+// Check if all digits are entered
+if (otpState.isCodeComplete()) {
+    val code = otpState.code // Returns concatenated string like "123456"
+}
+
+// Set error state
+otpState.isError = true
+```
+
+**Features:**
+- Survives configuration changes and process death
+- Two overloads: by digit count or by initial digits list
+- Automatic focus management
+- Error state support
 
 #### Typography Utilities
 Custom typography extensions and utilities for consistent text styling.
