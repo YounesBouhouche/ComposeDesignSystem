@@ -23,5 +23,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Compose Design System"
-include(":app")
+include(":sample")
 include(":mydesignsystem")
