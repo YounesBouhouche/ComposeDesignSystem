@@ -381,8 +381,8 @@ Key dependencies included:
 ## 🔧 Building from Source
 
 ```bash
-git clone https://github.com/yourusername/compose-design-system.git
-cd compose-design-system
+git clone https://github.com/YounesBouhouche/ComposeDesignSystem.git
+cd ComposeDesignSystem
 ./gradlew build
 ```
 
