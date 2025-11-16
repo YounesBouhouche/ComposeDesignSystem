@@ -55,7 +55,7 @@ import soup.compose.material.motion.animation.materialSharedAxisZ
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ExpressiveIconButton(
-    icon: ImageVector,
+    icon: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     size: Dp = IconButtonDefaults.extraSmallIconSize,
     widthOption: IconButtonDefaults.IconButtonWidthOption = IconButtonDefaults.IconButtonWidthOption.Uniform,
@@ -65,7 +65,6 @@ fun ExpressiveIconButton(
         else IconButtonDefaults.iconButtonColors(),
     loading: Boolean = false,
     enabled: Boolean = true,
-    iconRotationAngle: Float = 0f,
     interactionSource: MutableInteractionSource? = null,
     onClick: () -> Unit
 ) {
@@ -95,18 +94,7 @@ fun ExpressiveIconButton(
             if (isLoading)
                 LoadingIndicator(Modifier.size(size))
             else {
-                AnimatedContent(
-                    icon,
-                    transitionSpec = {
-                        materialSharedAxisZ(true)
-                    }
-                ) {
-                    Icon(
-                        it,
-                        contentDescription = null,
-                        modifier = Modifier.size(size).rotate(iconRotationAngle),
-                    )
-                }
+                icon()
             }
         }
     }
@@ -131,3 +119,46 @@ fun ExpressiveIconButton(
             content = content,
         )
 }
+
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+fun ExpressiveIconButton(
+    icon: ImageVector,
+    modifier: Modifier = Modifier,
+    size: Dp = IconButtonDefaults.extraSmallIconSize,
+    widthOption: IconButtonDefaults.IconButtonWidthOption = IconButtonDefaults.IconButtonWidthOption.Uniform,
+    outlined: Boolean = false,
+    colors: IconButtonColors =
+        if (outlined) IconButtonDefaults.outlinedIconButtonColors()
+        else IconButtonDefaults.iconButtonColors(),
+    loading: Boolean = false,
+    enabled: Boolean = true,
+    iconRotationAngle: Float = 0f,
+    interactionSource: MutableInteractionSource? = null,
+    onClick: () -> Unit
+) = ExpressiveIconButton(
+    {
+        AnimatedContent(
+            icon,
+            transitionSpec = {
+                materialSharedAxisZ(true)
+            }
+        ) {
+            Icon(
+                it,
+                contentDescription = null,
+                modifier = Modifier.size(size).rotate(iconRotationAngle),
+            )
+        }
+    },
+    modifier,
+    size,
+    widthOption,
+    outlined,
+    colors,
+    loading,
+    enabled,
+    interactionSource,
+    onClick
+)
